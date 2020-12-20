@@ -9,8 +9,20 @@ exports.getBlogs = async (req, res, next) => {
     }
     return res.status(200).json({ message: blogs });
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: err });
+    return res.status(500).json({ error: err });
+  }
+};
+
+exports.getOneBlog = async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    await Blog.findById(id, (err, result) => {
+      if (!err) {
+        return res.status(200).json({ message: result });
+      }
+    });
+  } catch (err) {
+    return res.status(404).json({ error: err });
   }
 };
 
@@ -28,7 +40,7 @@ exports.postBlog = async (req, res, next) => {
     }
     return res.status(409).json({ error: "Server error" });
   } catch (err) {
-    res.status(500).json({ error: err });
+    return res.status(500).json({ error: err });
   }
 };
 
@@ -47,7 +59,7 @@ exports.updateBlog = async (req, res, next) => {
       }
     );
   } catch (err) {
-    res.status(500).json({ error: err });
+    return res.status(500).json({ error: err });
   }
 };
 
@@ -64,6 +76,6 @@ exports.deleteBlog = async (req, res, next) => {
       return res.status(201).json({ message: "Blog deleted" });
     });
   } catch (err) {
-    res.status(500).json({ error: err });
+    return res.status(500).json({ error: err });
   }
 };
