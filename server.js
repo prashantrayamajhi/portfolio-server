@@ -4,4 +4,4 @@ if (process.env.NODE_ENV !== "production") {
 
 const app = require("./app");
 require("./db/db");
-app.listen(8080 || process.env.PORT, console.log("Listening on port 8080"));
+app.listen(process.env.PORT || 8080, console.log("Listening on port 8080"));
